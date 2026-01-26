@@ -1,1 +1,7 @@
 project_id = "obtxzstpggaihoxnsarf"
+
+[functions.create-payment]
+verify_jwt = false
+
+[functions.lava-webhook]
+verify_jwt = false
