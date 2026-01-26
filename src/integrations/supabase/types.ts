@@ -14,13 +14,239 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      credit_products: {
+        Row: {
+          created_at: string
+          credits: number
+          description: string | null
+          id: string
+          is_active: boolean
+          lava_offer_id: string | null
+          name: string
+          periodicity: string | null
+          price_eur: number | null
+          price_rub: number
+          price_usd: number | null
+          product_type: string
+        }
+        Insert: {
+          created_at?: string
+          credits: number
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          lava_offer_id?: string | null
+          name: string
+          periodicity?: string | null
+          price_eur?: number | null
+          price_rub: number
+          price_usd?: number | null
+          product_type: string
+        }
+        Update: {
+          created_at?: string
+          credits?: number
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          lava_offer_id?: string | null
+          name?: string
+          periodicity?: string | null
+          price_eur?: number | null
+          price_rub?: number
+          price_usd?: number | null
+          product_type?: string
+        }
+        Relationships: []
+      }
+      credit_transactions: {
+        Row: {
+          amount: number
+          balance_after: number
+          created_at: string
+          description: string | null
+          id: string
+          reference_id: string | null
+          transaction_type: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          balance_after: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          reference_id?: string | null
+          transaction_type: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          balance_after?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          reference_id?: string | null
+          transaction_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          completed_at: string | null
+          created_at: string
+          credits_amount: number
+          currency: string
+          email: string
+          id: string
+          lava_contract_id: string | null
+          lava_invoice_id: string | null
+          metadata: Json | null
+          payment_method: string | null
+          product_id: string | null
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          completed_at?: string | null
+          created_at?: string
+          credits_amount: number
+          currency?: string
+          email: string
+          id?: string
+          lava_contract_id?: string | null
+          lava_invoice_id?: string | null
+          metadata?: Json | null
+          payment_method?: string | null
+          product_id?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          completed_at?: string | null
+          created_at?: string
+          credits_amount?: number
+          currency?: string
+          email?: string
+          id?: string
+          lava_contract_id?: string | null
+          lava_invoice_id?: string | null
+          metadata?: Json | null
+          payment_method?: string | null
+          product_id?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "credit_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          credits: number
+          display_name: string | null
+          email: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          credits?: number
+          display_name?: string | null
+          email?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          credits?: number
+          display_name?: string | null
+          email?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          cancelled_at: string | null
+          created_at: string
+          credits_per_period: number
+          current_period_end: string
+          current_period_start: string
+          id: string
+          lava_subscription_id: string | null
+          product_id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          cancelled_at?: string | null
+          created_at?: string
+          credits_per_period: number
+          current_period_end: string
+          current_period_start?: string
+          id?: string
+          lava_subscription_id?: string | null
+          product_id: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          cancelled_at?: string | null
+          created_at?: string
+          credits_per_period?: number
+          current_period_end?: string
+          current_period_start?: string
+          id?: string
+          lava_subscription_id?: string | null
+          product_id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "credit_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      add_credits: {
+        Args: {
+          _amount: number
+          _description: string
+          _reference_id?: string
+          _transaction_type: string
+          _user_id: string
+        }
+        Returns: number
+      }
+      use_credits: {
+        Args: { _amount: number; _description: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
