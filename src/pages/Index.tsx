@@ -2,6 +2,9 @@ import { useState } from "react";
 import { PoemGenerator } from "@/components/PoemGenerator";
 import { SongGenerator } from "@/components/SongGenerator";
 import { Examples } from "@/components/Examples";
+import { AuthModal } from "@/components/AuthModal";
+import { PurchaseModal } from "@/components/PurchaseModal";
+import { CreditDisplay } from "@/components/CreditDisplay";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, Sparkles } from "lucide-react";
@@ -10,11 +13,27 @@ import heroImage from "@/assets/hero-bg.jpg";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState<"poem" | "song">("poem");
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen">
+      {/* Header with auth/credits */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-primary/10">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <Link to="/" className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            PoetAI
+          </Link>
+          <CreditDisplay
+            onBuyClick={() => setPurchaseModalOpen(true)}
+            onLoginClick={() => setAuthModalOpen(true)}
+          />
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section 
-        className="relative min-h-[70vh] flex items-center justify-center overflow-hidden"
+        className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-16"
         style={{
           backgroundImage: `linear-gradient(to bottom, rgba(252, 250, 255, 0.9), rgba(229, 222, 255, 0.95)), url(${heroImage})`,
           backgroundSize: 'cover',
@@ -103,6 +122,10 @@ const Index = () => {
           </p>
         </div>
       </footer>
+
+      {/* Modals */}
+      <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
+      <PurchaseModal open={purchaseModalOpen} onOpenChange={setPurchaseModalOpen} />
     </div>
   );
 };
