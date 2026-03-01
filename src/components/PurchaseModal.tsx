@@ -1,7 +1,3 @@
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Dialog,
   DialogContent,
@@ -10,157 +6,55 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/use-toast';
-import { Loader2, Coins, Check, Sparkles } from 'lucide-react';
+import { Coins, Sparkles, Crown, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-interface CreditProduct {
-  id: string;
-  name: string;
-  credits: number;
-  price_rub: number;
-  price_usd: number | null;
-  price_eur: number | null;
-  description: string | null;
-  product_type: string;
-  periodicity: string | null;
-}
 
 interface PurchaseModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-type Currency = 'RUB' | 'USD' | 'EUR';
+const packages = [
+  {
+    name: '10 кредитов',
+    credits: 10,
+    price: 99,
+    url: 'https://app.lava.top/products/daeba6d4-2072-42d0-bcae-d591280ac6b9/7923cc60-eef1-44fa-bc63-2238394deb0a',
+  },
+  {
+    name: '50 кредитов',
+    credits: 50,
+    price: 399,
+    popular: true,
+    url: 'https://app.lava.top/products/daeba6d4-2072-42d0-bcae-d591280ac6b9/9b30b6b2-8876-4ae6-aefe-3ea6982e4b82',
+  },
+  {
+    name: '100 кредитов',
+    credits: 100,
+    price: 699,
+    url: 'https://app.lava.top/products/daeba6d4-2072-42d0-bcae-d591280ac6b9/0f761d46-13ac-44b7-8949-53037e02510d',
+  },
+];
+
+const subscriptions = [
+  {
+    name: '1 Месяц',
+    description: 'БЕЗЛИМИТ! Подписка на 1 месяц',
+    price: 499,
+    period: 'мес',
+    url: 'https://app.lava.top/products/daeba6d4-2072-42d0-bcae-d591280ac6b9/82030969-26d5-49e6-9d1f-aef767998b43',
+  },
+  {
+    name: '1 Год',
+    description: 'БЕЗЛИМИТ! Подписка на 1 год',
+    price: 3999,
+    period: 'год',
+    popular: true,
+    url: 'https://app.lava.top/products/daeba6d4-2072-42d0-bcae-d591280ac6b9/c73457a3-6cbf-4663-a440-cb1157cf7a74',
+  },
+];
 
 export function PurchaseModal({ open, onOpenChange }: PurchaseModalProps) {
-  const [products, setProducts] = useState<CreditProduct[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [purchasing, setPurchasing] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
-  const [currency, setCurrency] = useState<Currency>('RUB');
-  const [email, setEmail] = useState('');
-  const { user, session } = useAuth();
-  const { toast } = useToast();
-
-  useEffect(() => {
-    if (user?.email) {
-      setEmail(user.email);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (open) {
-      fetchProducts();
-    }
-  }, [open]);
-
-  const fetchProducts = async () => {
-    setLoading(true);
-    const { data, error } = await supabase
-      .from('credit_products')
-      .select('*')
-      .eq('is_active', true)
-      .order('credits', { ascending: true });
-
-    if (error) {
-      console.error('Error fetching products:', error);
-    } else {
-      setProducts(data || []);
-      if (data && data.length > 0 && !selectedProduct) {
-        setSelectedProduct(data[0].id);
-      }
-    }
-    setLoading(false);
-  };
-
-  const getPrice = (product: CreditProduct) => {
-    switch (currency) {
-      case 'USD':
-        return product.price_usd || Math.round(product.price_rub / 100);
-      case 'EUR':
-        return product.price_eur || Math.round(product.price_rub / 110);
-      default:
-        return product.price_rub;
-    }
-  };
-
-  const formatPrice = (price: number) => {
-    switch (currency) {
-      case 'USD':
-        return `$${price}`;
-      case 'EUR':
-        return `€${price}`;
-      default:
-        return `${price} ₽`;
-    }
-  };
-
-  const handlePurchase = async () => {
-    if (!selectedProduct) {
-      toast({
-        title: 'Выберите пакет',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    if (!email) {
-      toast({
-        title: 'Введите email',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    setPurchasing(true);
-    try {
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-        'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-      };
-
-      if (session?.access_token) {
-        headers['Authorization'] = `Bearer ${session.access_token}`;
-      }
-
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-payment`,
-        {
-          method: 'POST',
-          headers,
-          body: JSON.stringify({
-            productId: selectedProduct,
-            email,
-            currency,
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Ошибка создания платежа');
-      }
-
-      // Redirect to payment page
-      window.location.href = data.paymentUrl;
-    } catch (error: any) {
-      toast({
-        title: 'Ошибка',
-        description: error.message || 'Не удалось создать платёж',
-        variant: 'destructive',
-      });
-    } finally {
-      setPurchasing(false);
-    }
-  };
-
-  const packages = products.filter(p => p.product_type === 'package');
-  const subscriptions = products.filter(p => p.product_type === 'subscription');
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
@@ -170,161 +64,95 @@ export function PurchaseModal({ open, onOpenChange }: PurchaseModalProps) {
             Купить кредиты
           </DialogTitle>
           <DialogDescription>
-            Выберите пакет кредитов для генерации стихов и песен
+            Выберите пакет кредитов или безлимитную подписку
           </DialogDescription>
         </DialogHeader>
 
-        {loading ? (
-          <div className="flex justify-center py-8">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          </div>
-        ) : products.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
-            Нет доступных продуктов
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {/* Currency selector */}
-            <div className="flex justify-center gap-2">
-              {(['RUB', 'USD', 'EUR'] as Currency[]).map((cur) => (
-                <Button
-                  key={cur}
-                  variant={currency === cur ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setCurrency(cur)}
-                  className={cn(
-                    currency === cur && 'bg-gradient-to-r from-primary to-secondary'
-                  )}
-                >
-                  {cur === 'RUB' ? '₽ RUB' : cur === 'USD' ? '$ USD' : '€ EUR'}
-                </Button>
-              ))}
-            </div>
+        <Tabs defaultValue="packages" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="packages">Пакеты</TabsTrigger>
+            <TabsTrigger value="subscriptions">
+              <Crown className="h-4 w-4 mr-1" />
+              Подписки
+            </TabsTrigger>
+          </TabsList>
 
-            <Tabs defaultValue="packages" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="packages">Пакеты</TabsTrigger>
-                <TabsTrigger value="subscriptions">Подписки</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="packages" className="space-y-3 pt-4">
-                {packages.length === 0 ? (
-                  <p className="text-center text-muted-foreground">Нет доступных пакетов</p>
-                ) : (
-                  packages.map((product) => (
-                    <div
-                      key={product.id}
-                      onClick={() => setSelectedProduct(product.id)}
-                      className={cn(
-                        'relative p-4 rounded-xl border-2 cursor-pointer transition-all',
-                        selectedProduct === product.id
-                          ? 'border-primary bg-primary/5'
-                          : 'border-border hover:border-primary/50'
-                      )}
-                    >
-                      {selectedProduct === product.id && (
-                        <div className="absolute top-3 right-3">
-                          <Check className="h-5 w-5 text-primary" />
-                        </div>
-                      )}
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <h4 className="font-semibold">{product.name}</h4>
-                          <p className="text-sm text-muted-foreground flex items-center gap-1">
-                            <Sparkles className="h-3 w-3" />
-                            {product.credits} кредитов
-                          </p>
-                        </div>
-                        <div className="text-xl font-bold">
-                          {formatPrice(getPrice(product))}
-                        </div>
-                      </div>
-                      {product.description && (
-                        <p className="mt-2 text-sm text-muted-foreground">
-                          {product.description}
-                        </p>
-                      )}
-                    </div>
-                  ))
+          <TabsContent value="packages" className="space-y-3 pt-4">
+            {packages.map((product) => (
+              <a
+                key={product.name}
+                href={product.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  'relative block p-4 rounded-xl border-2 cursor-pointer transition-all hover:border-primary/50 hover:bg-primary/5',
+                  product.popular
+                    ? 'border-primary bg-primary/5'
+                    : 'border-border'
                 )}
-              </TabsContent>
-
-              <TabsContent value="subscriptions" className="space-y-3 pt-4">
-                {subscriptions.length === 0 ? (
-                  <p className="text-center text-muted-foreground">Нет доступных подписок</p>
-                ) : (
-                  subscriptions.map((product) => (
-                    <div
-                      key={product.id}
-                      onClick={() => setSelectedProduct(product.id)}
-                      className={cn(
-                        'relative p-4 rounded-xl border-2 cursor-pointer transition-all',
-                        selectedProduct === product.id
-                          ? 'border-primary bg-primary/5'
-                          : 'border-border hover:border-primary/50'
-                      )}
-                    >
-                      {selectedProduct === product.id && (
-                        <div className="absolute top-3 right-3">
-                          <Check className="h-5 w-5 text-primary" />
-                        </div>
-                      )}
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <h4 className="font-semibold">{product.name}</h4>
-                          <p className="text-sm text-muted-foreground flex items-center gap-1">
-                            <Sparkles className="h-3 w-3" />
-                            {product.credits} кредитов / {product.periodicity === 'monthly' ? 'месяц' : 'год'}
-                          </p>
-                        </div>
-                        <div className="text-xl font-bold">
-                          {formatPrice(getPrice(product))}/{product.periodicity === 'monthly' ? 'мес' : 'год'}
-                        </div>
-                      </div>
-                      {product.description && (
-                        <p className="mt-2 text-sm text-muted-foreground">
-                          {product.description}
-                        </p>
-                      )}
-                    </div>
-                  ))
+              >
+                {product.popular && (
+                  <div className="absolute -top-2.5 left-4 px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-xs font-medium">
+                    Популярный
+                  </div>
                 )}
-              </TabsContent>
-            </Tabs>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h4 className="font-semibold">{product.name}</h4>
+                    <p className="text-sm text-muted-foreground flex items-center gap-1">
+                      <Sparkles className="h-3 w-3" />
+                      {product.credits} генераций
+                    </p>
+                  </div>
+                  <div className="text-xl font-bold">
+                    {product.price} ₽
+                  </div>
+                </div>
+              </a>
+            ))}
+          </TabsContent>
 
-            {/* Email input for non-authenticated users */}
-            {!user && (
-              <div className="space-y-2">
-                <Label htmlFor="purchase-email">Email для получения кредитов</Label>
-                <Input
-                  id="purchase-email"
-                  type="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <p className="text-xs text-muted-foreground">
-                  Создайте аккаунт с этим email для использования кредитов
-                </p>
-              </div>
-            )}
+          <TabsContent value="subscriptions" className="space-y-3 pt-4">
+            {subscriptions.map((product) => (
+              <a
+                key={product.name}
+                href={product.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  'relative block p-4 rounded-xl border-2 cursor-pointer transition-all hover:border-primary/50 hover:bg-primary/5',
+                  product.popular
+                    ? 'border-primary bg-primary/5'
+                    : 'border-border'
+                )}
+              >
+                {product.popular && (
+                  <div className="absolute -top-2.5 left-4 px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-xs font-medium">
+                    Выгодно
+                  </div>
+                )}
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h4 className="font-semibold flex items-center gap-1">
+                      <Zap className="h-4 w-4 text-accent" />
+                      {product.name}
+                    </h4>
+                    <p className="text-sm text-muted-foreground">
+                      {product.description}
+                    </p>
+                  </div>
+                  <div className="text-xl font-bold">
+                    {product.price} ₽<span className="text-sm font-normal text-muted-foreground">/{product.period}</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </TabsContent>
+        </Tabs>
 
-            <Button
-              onClick={handlePurchase}
-              disabled={purchasing || !selectedProduct}
-              className="w-full h-12 text-lg bg-gradient-to-r from-primary to-secondary hover:opacity-90"
-            >
-              {purchasing ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
-                <>
-                  <Coins className="h-5 w-5 mr-2" />
-                  Оплатить
-                </>
-              )}
-            </Button>
-          </div>
-        )}
+        <p className="text-xs text-center text-muted-foreground pt-2">
+          Оплата через Lava.top · Безопасная оплата картой и другими способами
+        </p>
       </DialogContent>
     </Dialog>
   );
