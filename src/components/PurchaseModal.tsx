@@ -18,20 +18,20 @@ const packages = [
   {
     name: '10 кредитов',
     credits: 10,
-    price: 99,
+    price: 149,
     url: 'https://app.lava.top/products/daeba6d4-2072-42d0-bcae-d591280ac6b9/7923cc60-eef1-44fa-bc63-2238394deb0a',
   },
   {
     name: '50 кредитов',
     credits: 50,
-    price: 399,
+    price: 499,
     popular: true,
     url: 'https://app.lava.top/products/daeba6d4-2072-42d0-bcae-d591280ac6b9/9b30b6b2-8876-4ae6-aefe-3ea6982e4b82',
   },
   {
     name: '100 кредитов',
     credits: 100,
-    price: 699,
+    price: 799,
     url: 'https://app.lava.top/products/daeba6d4-2072-42d0-bcae-d591280ac6b9/0f761d46-13ac-44b7-8949-53037e02510d',
   },
 ];
@@ -40,14 +40,14 @@ const subscriptions = [
   {
     name: '1 Месяц',
     description: 'БЕЗЛИМИТ! Подписка на 1 месяц',
-    price: 499,
+    price: 999,
     period: 'мес',
     url: 'https://app.lava.top/products/daeba6d4-2072-42d0-bcae-d591280ac6b9/82030969-26d5-49e6-9d1f-aef767998b43',
   },
   {
     name: '1 Год',
     description: 'БЕЗЛИМИТ! Подписка на 1 год',
-    price: 3999,
+    price: 15499,
     period: 'год',
     popular: true,
     url: 'https://app.lava.top/products/daeba6d4-2072-42d0-bcae-d591280ac6b9/c73457a3-6cbf-4663-a440-cb1157cf7a74',
