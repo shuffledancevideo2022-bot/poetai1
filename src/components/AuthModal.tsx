@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { isDisposableEmail, isValidEmailFormat } from '@/lib/disposable-emails';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -48,7 +49,18 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
     setLoading(true);
     try {
       if (mode === 'signup') {
-        const { error } = await signUp(email, password);
+        const trimmedEmail = email.trim().toLowerCase();
+        if (!isValidEmailFormat(trimmedEmail)) {
+          toast({ title: 'Ошибка', description: 'Введите корректный email адрес', variant: 'destructive' });
+          setLoading(false);
+          return;
+        }
+        if (isDisposableEmail(trimmedEmail)) {
+          toast({ title: 'Ошибка', description: 'Временные почтовые адреса не допускаются. Используйте постоянный email.', variant: 'destructive' });
+          setLoading(false);
+          return;
+        }
+        const { error } = await signUp(trimmedEmail, password);
         if (error) throw error;
         toast({
           title: 'Регистрация успешна!',

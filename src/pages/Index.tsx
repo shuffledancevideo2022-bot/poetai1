@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, Sparkles, Library } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-bg.jpg";
+import { Footer } from "@/components/Footer";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState<"poem" | "song">("poem");
@@ -122,16 +123,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-primary/10">
-        <div className="container mx-auto px-4 text-center space-y-4">
-          <p className="text-lg font-medium">
-            PoetAI — Искусство слова, рождённое нейросетью
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Создавайте прекрасные стихи, песни и поздравления с помощью искусственного интеллекта
-          </p>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Modals */}
       <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />

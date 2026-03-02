@@ -1,39 +1,38 @@
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Library as LibraryIcon, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { Footer } from "@/components/Footer";
 
-const books = [
-  {
-    title: "1000+ Промптов для Suno AI",
-    description: "Ультимативный справочник для создания хитов за 1 минуту. Перестаньте гадать — начните управлять звуком.",
-    cover: "https://mastersuno.ru/wp-content/uploads/2026/01/chatgpt-image-21-yanv.-2026-g.-01_04_06-e1768950024613.png",
-    url: "https://sunoprompt.ru/",
-  },
-  {
-    title: "СЕКРЕТЫ РУССКОГО ХИТА",
-    description: "Хватит гадать. Начни управлять. Уникальная технология создания промптов в SUNO AI.",
-    cover: "https://sunoprompt.ru/books/2/1roman_ru_sunoprompt_ru_russionhitbook01022026.png",
-    url: "https://sunoprompt.ru/books/2/",
-  },
-  {
-    title: "ЭПИЧЕСКИЙ SOUND DESIGN",
-    description: "Как создавать промпты в SUNO AI для эпического и игрового саунд-дизайна.",
-    cover: "https://mastersuno.ru/wp-content/uploads/2026/02/epicbook.png",
-    url: "https://suno5.ru/books/3/",
-  },
-  {
-    title: "Jingle Master",
-    description: "ИИ‑промпты для джинглов и аудиобрендинга. Создавайте фирменный звук бренда в Suno AI за минуты, а не недели.",
-    cover: "https://suno5.ru/books/4/book-cover-Bv6qt_fg.png",
-    url: "https://suno5.ru/books/4/",
-  },
-];
+interface Book {
+  id: string;
+  title: string;
+  description: string | null;
+  cover_url: string | null;
+  external_url: string | null;
+}
 
 export default function Library() {
+  const [books, setBooks] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase
+      .from("library_books")
+      .select("id, title, description, cover_url, external_url")
+      .eq("is_active", true)
+      .order("sort_order")
+      .then(({ data }) => {
+        setBooks((data as Book[]) || []);
+        setLoading(false);
+      });
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-sky to-background">
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-background via-sky to-background">
+      <div className="flex-1 container mx-auto px-4 py-12 max-w-6xl">
         <Link
           to="/"
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
@@ -56,37 +55,48 @@ export default function Library() {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {books.map((book) => (
-            <a
-              key={book.title}
-              href={book.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block"
-            >
-              <Card className="h-full border-primary/10 shadow-soft hover:border-primary/30 hover:shadow-lg transition-all duration-300">
-                <CardContent className="flex gap-5 p-5">
-                  <img
-                    src={book.cover}
-                    alt={book.title}
-                    className="w-24 h-32 object-cover rounded-lg shrink-0 shadow-md group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="flex flex-col justify-center min-w-0">
-                    <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
-                      {book.title}
-                      <ExternalLink className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {book.description}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </a>
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {books.map((book) => (
+              <a
+                key={book.id}
+                href={book.external_url || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block"
+              >
+                <Card className="h-full border-primary/10 shadow-soft hover:border-primary/30 hover:shadow-lg transition-all duration-300">
+                  <CardContent className="flex gap-5 p-5">
+                    {book.cover_url && (
+                      <img
+                        src={book.cover_url}
+                        alt={book.title}
+                        className="w-24 h-32 object-cover rounded-lg shrink-0 shadow-md group-hover:scale-105 transition-transform duration-300"
+                      />
+                    )}
+                    <div className="flex flex-col justify-center min-w-0">
+                      <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
+                        {book.title}
+                        <ExternalLink className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                      </h3>
+                      {book.description && (
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {book.description}
+                        </p>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </a>
+            ))}
+          </div>
+        )}
       </div>
+      <Footer />
     </div>
   );
 }
