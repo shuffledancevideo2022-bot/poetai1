@@ -92,6 +92,69 @@ export type Database = {
         }
         Relationships: []
       }
+      email_subscriptions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          is_active: boolean
+          source: string
+          unsubscribed_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          is_active?: boolean
+          source?: string
+          unsubscribed_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          is_active?: boolean
+          source?: string
+          unsubscribed_at?: string | null
+        }
+        Relationships: []
+      }
+      library_books: {
+        Row: {
+          cover_url: string | null
+          created_at: string
+          description: string | null
+          external_url: string | null
+          id: string
+          is_active: boolean
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          external_url?: string | null
+          id?: string
+          is_active?: boolean
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          external_url?: string | null
+          id?: string
+          is_active?: boolean
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount: number
