@@ -2,11 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { BookOpen, Sparkles, Music, Heart, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Footer } from "@/components/Footer";
 
 export default function Guide() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-sky to-background">
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-background via-sky to-background">
+      <div className="flex-1 container mx-auto px-4 py-12 max-w-6xl">
         <Link 
           to="/" 
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
@@ -25,7 +26,6 @@ export default function Guide() {
         </div>
 
         <div className="space-y-8">
-          {/* Основы стихосложения */}
           <Card className="border-primary/10 shadow-soft">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl">
@@ -67,7 +67,6 @@ export default function Guide() {
             </CardContent>
           </Card>
 
-          {/* Типы рифмовки */}
           <Card className="border-primary/10 shadow-soft">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl">
@@ -79,57 +78,48 @@ export default function Guide() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <h3 className="font-semibold mb-2">Смежная (AABB)</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Рифмуются соседние строки
-                  </p>
+                  <p className="text-sm text-muted-foreground">Рифмуются соседние строки</p>
                   <div className="text-xs mt-2 p-3 bg-muted/50 rounded whitespace-pre-wrap break-words">
-День сменяет ночь (A)
+{`День сменяет ночь (A)
 И уходит прочь (A)
 Звёзды в небе светят (B)
-Люди их приветят (B)
+Люди их приветят (B)`}
                   </div>
                 </div>
                 <div>
                   <h3 className="font-semibold mb-2">Перекрёстная (ABAB)</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Рифмуются через строку
-                  </p>
+                  <p className="text-sm text-muted-foreground">Рифмуются через строку</p>
                   <div className="text-xs mt-2 p-3 bg-muted/50 rounded whitespace-pre-wrap break-words">
-Люблю грозу в начале мая (A)
+{`Люблю грозу в начале мая (A)
 Когда весенний первый гром (B)
 Как бы резвяся и играя (A)
-Грохочет в небе голубом (B)
+Грохочет в небе голубом (B)`}
                   </div>
                 </div>
                 <div>
                   <h3 className="font-semibold mb-2">Опоясывающая (ABBA)</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Внешние строки рифмуются с внешними
-                  </p>
+                  <p className="text-sm text-muted-foreground">Внешние строки рифмуются с внешними</p>
                   <div className="text-xs mt-2 p-3 bg-muted/50 rounded whitespace-pre-wrap break-words">
-Мороз и солнце день чудесный (A)
+{`Мороз и солнце день чудесный (A)
 Ещё ты дремлешь друг прелестный (A)
 Пора красавица проснись (B)
-Открой сомкнуты негой взоры (B)
+Открой сомкнуты негой взоры (B)`}
                   </div>
                 </div>
                 <div>
                   <h3 className="font-semibold mb-2">Холостая (ABCB)</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Рифмуются только 2 и 4 строки
-                  </p>
+                  <p className="text-sm text-muted-foreground">Рифмуются только 2 и 4 строки</p>
                   <div className="text-xs mt-2 p-3 bg-muted/50 rounded whitespace-pre-wrap break-words">
-Белеет парус одинокий (A)
+{`Белеет парус одинокий (A)
 В тумане моря голубом (B)
 Что ищет он в стране далёкой (C)
-Что кинул он в краю родном (B)
+Что кинул он в краю родном (B)`}
                   </div>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Советы по написанию песен */}
           <Card className="border-primary/10 shadow-soft">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl">
@@ -165,7 +155,6 @@ export default function Guide() {
             </CardContent>
           </Card>
 
-          {/* Рифмовник */}
           <Card className="border-primary/10 shadow-soft">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl">
@@ -177,45 +166,34 @@ export default function Guide() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                   <h3 className="font-semibold mb-3">Любовь</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    вновь, кровь, бровь, морковь, любовь, кровь, вновь, готовь
-                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">вновь, кровь, бровь, морковь, любовь, кровь, вновь, готовь</p>
                 </div>
                 <div>
                   <h3 className="font-semibold mb-3">Мечта</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    красота, высота, пустота, темнота, мечта, простота
-                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">красота, высота, пустота, темнота, мечта, простота</p>
                 </div>
                 <div>
                   <h3 className="font-semibold mb-3">Душа</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    хороша, малыша, не спеша, чуть дыша, душа, крыша
-                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">хороша, малыша, не спеша, чуть дыша, душа, крыша</p>
                 </div>
                 <div>
                   <h3 className="font-semibold mb-3">Сердце</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    дверце, оконце, солнце, деревце, сердце
-                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">дверце, оконце, солнце, деревце, сердце</p>
                 </div>
                 <div>
                   <h3 className="font-semibold mb-3">Небо</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    где бы, хлеба, слепо, небо, требо
-                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">где бы, хлеба, слепо, небо, требо</p>
                 </div>
                 <div>
                   <h3 className="font-semibold mb-3">Свет</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    нет, лет, поэт, букет, привет, ответ, рассвет
-                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">нет, лет, поэт, букет, привет, ответ, рассвет</p>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

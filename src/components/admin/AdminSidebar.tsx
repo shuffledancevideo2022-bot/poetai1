@@ -1,4 +1,4 @@
-import { BarChart3, Users, Package, CreditCard, ArrowLeft } from 'lucide-react';
+import { BarChart3, Users, Package, CreditCard, ArrowLeft, BookOpen, Mail } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { useLocation } from 'react-router-dom';
 import {
@@ -18,6 +18,8 @@ const items = [
   { title: 'Пользователи', url: '/admin/users', icon: Users },
   { title: 'Продукты', url: '/admin/products', icon: Package },
   { title: 'Платежи', url: '/admin/payments', icon: CreditCard },
+  { title: 'Библиотека', url: '/admin/library', icon: BookOpen },
+  { title: 'Рассылки', url: '/admin/subscriptions', icon: Mail },
 ];
 
 export function AdminSidebar() {
