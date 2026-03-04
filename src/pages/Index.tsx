@@ -7,7 +7,7 @@ import { PurchaseModal } from "@/components/PurchaseModal";
 import { CreditDisplay } from "@/components/CreditDisplay";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Sparkles, Library } from "lucide-react";
+import { BookOpen, Sparkles, Library, Newspaper, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-bg.jpg";
 import { Footer } from "@/components/Footer";
