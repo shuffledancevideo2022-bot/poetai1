@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Guide from "./pages/Guide";
 import Library from "./pages/Library";
+import Blog from "./pages/Blog";
+import Pricing from "./pages/Pricing";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailed from "./pages/PaymentFailed";
 import NotFound from "./pages/NotFound";
