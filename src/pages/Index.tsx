@@ -34,6 +34,14 @@ const Index = () => {
               <Library className="h-4 w-4" />
               Библиотека
             </Link>
+            <Link to="/blog" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
+              <Newspaper className="h-4 w-4" />
+              Блог
+            </Link>
+            <Link to="/pricing" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
+              <CreditCard className="h-4 w-4" />
+              Тарифы
+            </Link>
           </div>
           <CreditDisplay
             onBuyClick={() => setPurchaseModalOpen(true)}
