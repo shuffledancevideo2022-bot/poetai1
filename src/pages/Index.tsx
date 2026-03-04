@@ -7,7 +7,7 @@ import { PurchaseModal } from "@/components/PurchaseModal";
 import { CreditDisplay } from "@/components/CreditDisplay";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Sparkles, Library } from "lucide-react";
+import { BookOpen, Sparkles, Library, Newspaper, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-bg.jpg";
 import { Footer } from "@/components/Footer";
@@ -33,6 +33,14 @@ const Index = () => {
             <Link to="/library" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
               <Library className="h-4 w-4" />
               Библиотека
+            </Link>
+            <Link to="/blog" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
+              <Newspaper className="h-4 w-4" />
+              Блог
+            </Link>
+            <Link to="/pricing" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
+              <CreditCard className="h-4 w-4" />
+              Тарифы
             </Link>
           </div>
           <CreditDisplay
