@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 
 interface Product {
   id: string;
@@ -33,16 +34,13 @@ export default function Pricing() {
       });
   }, []);
 
-  const oneTime = products.filter((p) => p.product_type === "one_time");
+  const oneTime = products.filter((p) => p.product_type === "package");
   const subscriptions = products.filter((p) => p.product_type === "subscription");
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-background via-sky to-background">
-      <div className="flex-1 container mx-auto px-4 py-12 max-w-5xl">
-        <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8">
-          <ArrowLeft className="h-4 w-4" />
-          <span>Вернуться на главную</span>
-        </Link>
+      <Header />
+      <div className="flex-1 container mx-auto px-4 py-12 max-w-5xl pt-24">
 
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
