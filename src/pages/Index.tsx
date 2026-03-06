@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { PoemGenerator } from "@/components/PoemGenerator";
 import { SongGenerator } from "@/components/SongGenerator";
-import { Examples } from "@/components/Examples";
+import { PromptBooks } from "@/components/PromptBooks";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, Sparkles } from "lucide-react";
@@ -11,7 +10,6 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState<"poem" | "song">("poem");
 
   return (
     <div className="min-h-screen">
