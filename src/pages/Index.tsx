@@ -69,7 +69,7 @@ const Index = () => {
       {/* Generator Section with Tabs */}
       <section id="generator" className="py-20 bg-gradient-to-b from-sky to-background">
         <div className="container mx-auto px-4">
-          <Tabs defaultValue="poem" className="w-full" onValueChange={(value) => setActiveTab(value as "poem" | "song")}>
+          <Tabs defaultValue="poem" className="w-full">
             <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 h-12">
               <TabsTrigger value="poem" className="text-base font-medium">
                 ✍️ Создать стих
@@ -88,10 +88,10 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Examples Section */}
+      {/* Prompt Books Section */}
       <section className="py-20 bg-gradient-to-b from-background to-sky">
         <div className="container mx-auto px-4">
-          <Examples type={activeTab} />
+          <PromptBooks />
         </div>
       </section>
 
