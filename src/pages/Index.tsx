@@ -2,53 +2,20 @@ import { useState } from "react";
 import { PoemGenerator } from "@/components/PoemGenerator";
 import { SongGenerator } from "@/components/SongGenerator";
 import { Examples } from "@/components/Examples";
-import { AuthModal } from "@/components/AuthModal";
-import { PurchaseModal } from "@/components/PurchaseModal";
-import { CreditDisplay } from "@/components/CreditDisplay";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Sparkles, Library, Newspaper, CreditCard } from "lucide-react";
+import { BookOpen, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-bg.jpg";
 import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState<"poem" | "song">("poem");
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen">
-      {/* Header with auth/credits */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-primary/10">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <Link to="/" className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              PoetAI
-            </Link>
-            <Link to="/guide" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
-              <BookOpen className="h-4 w-4" />
-              Мастерская поэта
-            </Link>
-            <Link to="/library" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
-              <Library className="h-4 w-4" />
-              Библиотека
-            </Link>
-            <Link to="/blog" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
-              <Newspaper className="h-4 w-4" />
-              Блог
-            </Link>
-            <Link to="/pricing" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
-              <CreditCard className="h-4 w-4" />
-              Тарифы
-            </Link>
-          </div>
-          <CreditDisplay
-            onBuyClick={() => setPurchaseModalOpen(true)}
-            onLoginClick={() => setAuthModalOpen(true)}
-          />
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section 
@@ -130,12 +97,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <Footer />
-
-      {/* Modals */}
-      <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
-      <PurchaseModal open={purchaseModalOpen} onOpenChange={setPurchaseModalOpen} />
     </div>
   );
 };
