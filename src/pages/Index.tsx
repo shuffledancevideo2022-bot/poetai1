@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { PoemGenerator } from "@/components/PoemGenerator";
 import { SongGenerator } from "@/components/SongGenerator";
-import { Examples } from "@/components/Examples";
+import { PromptBooks } from "@/components/PromptBooks";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, Sparkles } from "lucide-react";
@@ -11,7 +10,6 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState<"poem" | "song">("poem");
 
   return (
     <div className="min-h-screen">
@@ -71,7 +69,7 @@ const Index = () => {
       {/* Generator Section with Tabs */}
       <section id="generator" className="py-20 bg-gradient-to-b from-sky to-background">
         <div className="container mx-auto px-4">
-          <Tabs defaultValue="poem" className="w-full" onValueChange={(value) => setActiveTab(value as "poem" | "song")}>
+          <Tabs defaultValue="poem" className="w-full">
             <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 h-12">
               <TabsTrigger value="poem" className="text-base font-medium">
                 ✍️ Создать стих
@@ -90,10 +88,10 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Examples Section */}
+      {/* Prompt Books Section */}
       <section className="py-20 bg-gradient-to-b from-background to-sky">
         <div className="container mx-auto px-4">
-          <Examples type={activeTab} />
+          <PromptBooks />
         </div>
       </section>
 
