@@ -221,6 +221,8 @@ export type Database = {
           display_name: string | null
           email: string | null
           id: string
+          referral_code: string
+          referred_by: string | null
           updated_at: string
           user_id: string
         }
@@ -230,6 +232,8 @@ export type Database = {
           display_name?: string | null
           email?: string | null
           id?: string
+          referral_code?: string
+          referred_by?: string | null
           updated_at?: string
           user_id: string
         }
@@ -239,10 +243,59 @@ export type Database = {
           display_name?: string | null
           email?: string | null
           id?: string
+          referral_code?: string
+          referred_by?: string | null
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_referred_by_fkey"
+            columns: ["referred_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      referrals: {
+        Row: {
+          created_at: string
+          credits_awarded: number
+          id: string
+          referred_id: string
+          referrer_id: string
+        }
+        Insert: {
+          created_at?: string
+          credits_awarded?: number
+          id?: string
+          referred_id: string
+          referrer_id: string
+        }
+        Update: {
+          created_at?: string
+          credits_awarded?: number
+          id?: string
+          referred_id?: string
+          referrer_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referrals_referred_id_fkey"
+            columns: ["referred_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_referrer_id_fkey"
+            columns: ["referrer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       subscriptions: {
         Row: {
@@ -329,6 +382,10 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      process_referral: {
+        Args: { _new_user_id: string; _referral_code: string }
         Returns: boolean
       }
       use_credits: {
