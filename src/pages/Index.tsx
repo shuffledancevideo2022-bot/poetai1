@@ -21,6 +21,14 @@ const Index = () => {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
 
+  // Auto-open auth modal if referral link
+  useEffect(() => {
+    const ref = new URLSearchParams(window.location.search).get('ref');
+    if (ref) {
+      setAuthModalOpen(true);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen">
       <Header />
