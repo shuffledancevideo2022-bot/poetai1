@@ -20,6 +20,8 @@ import AdminPayments from "./pages/admin/AdminPayments";
 import AdminLibrary from "./pages/admin/AdminLibrary";
 import AdminSubscriptions from "./pages/admin/AdminSubscriptions";
 import AdminNotifications from "./pages/admin/AdminNotifications";
+import AdminBlog from "./pages/admin/AdminBlog";
+import BlogPost from "./pages/BlogPost";
 
 const queryClient = new QueryClient();
 
