@@ -4,6 +4,7 @@ import { BookOpen, Library, Newspaper, CreditCard, Gift, Menu, X } from "lucide-
 import { CreditDisplay } from "@/components/CreditDisplay";
 import { AuthModal } from "@/components/AuthModal";
 import { PurchaseModal } from "@/components/PurchaseModal";
+import { NotificationBell } from "@/components/NotificationBell";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
@@ -42,6 +43,7 @@ export function Header() {
           </div>
 
           <div className="flex items-center gap-2">
+            <NotificationBell />
             <CreditDisplay
               onBuyClick={() => setPurchaseModalOpen(true)}
               onLoginClick={() => setAuthModalOpen(true)}
