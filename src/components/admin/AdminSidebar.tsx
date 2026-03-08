@@ -21,6 +21,7 @@ const items = [
   { title: 'Библиотека', url: '/admin/library', icon: BookOpen },
   { title: 'Рассылки', url: '/admin/subscriptions', icon: Mail },
   { title: 'Уведомления', url: '/admin/notifications', icon: Bell },
+  { title: 'Блог', url: '/admin/blog', icon: FileText },
 ];
 
 export function AdminSidebar() {
