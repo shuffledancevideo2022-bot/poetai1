@@ -27,37 +27,39 @@ import BlogPost from "./pages/BlogPost";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/guide" element={<Guide />} />
-          <Route path="/library" element={<Library />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/payment/success" element={<PaymentSuccess />} />
-          <Route path="/payment/failed" element={<PaymentFailed />} />
-          <Route path="/referral" element={<Referral />} />
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="users" element={<AdminUsers />} />
-            <Route path="products" element={<AdminProducts />} />
-            <Route path="payments" element={<AdminPayments />} />
-            <Route path="library" element={<AdminLibrary />} />
-            <Route path="subscriptions" element={<AdminSubscriptions />} />
-            <Route path="notifications" element={<AdminNotifications />} />
-            <Route path="blog" element={<AdminBlog />} />
-          </Route>
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/guide" element={<Guide />} />
+            <Route path="/library" element={<Library />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/payment/success" element={<PaymentSuccess />} />
+            <Route path="/payment/failed" element={<PaymentFailed />} />
+            <Route path="/referral" element={<Referral />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="products" element={<AdminProducts />} />
+              <Route path="payments" element={<AdminPayments />} />
+              <Route path="library" element={<AdminLibrary />} />
+              <Route path="subscriptions" element={<AdminSubscriptions />} />
+              <Route path="notifications" element={<AdminNotifications />} />
+              <Route path="blog" element={<AdminBlog />} />
+            </Route>
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </HelmetProvider>
 );
 
 export default App;
