@@ -20,6 +20,7 @@ const items = [
   { title: 'Платежи', url: '/admin/payments', icon: CreditCard },
   { title: 'Библиотека', url: '/admin/library', icon: BookOpen },
   { title: 'Рассылки', url: '/admin/subscriptions', icon: Mail },
+  { title: 'Уведомления', url: '/admin/notifications', icon: Bell },
 ];
 
 export function AdminSidebar() {

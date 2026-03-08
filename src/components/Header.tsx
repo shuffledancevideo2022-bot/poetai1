@@ -43,6 +43,7 @@ export function Header() {
           </div>
 
           <div className="flex items-center gap-2">
+            <NotificationBell />
             <CreditDisplay
               onBuyClick={() => setPurchaseModalOpen(true)}
               onLoginClick={() => setAuthModalOpen(true)}
