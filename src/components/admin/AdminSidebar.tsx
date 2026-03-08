@@ -1,4 +1,4 @@
-import { BarChart3, Users, Package, CreditCard, ArrowLeft, BookOpen, Mail, Bell } from 'lucide-react';
+import { BarChart3, Users, Package, CreditCard, ArrowLeft, BookOpen, Mail, Bell, FileText } from 'lucide-react';
 import { NavLink } from '@/components/NavLink';
 import { useLocation } from 'react-router-dom';
 import {
