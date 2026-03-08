@@ -117,6 +117,13 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Referral Section */}
+      <section className="py-16 bg-gradient-to-b from-sky to-background">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <ReferralWidget onLoginClick={() => setAuthModalOpen(true)} />
+        </div>
+      </section>
+
       {/* Testimonials */}
       <Testimonials />
 

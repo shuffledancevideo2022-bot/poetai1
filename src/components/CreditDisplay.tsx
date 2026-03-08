@@ -72,6 +72,10 @@ export function CreditDisplay({ onBuyClick, onLoginClick }: CreditDisplayProps) 
             <Coins className="h-4 w-4 mr-2" />
             Купить кредиты
           </DropdownMenuItem>
+          <DropdownMenuItem onClick={handleCopyReferral}>
+            {copied ? <Check className="h-4 w-4 mr-2 text-green-500" /> : <Gift className="h-4 w-4 mr-2" />}
+            {copied ? 'Ссылка скопирована!' : `Пригласить друга (${referralCount})`}
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => signOut()}>
             <LogOut className="h-4 w-4 mr-2" />

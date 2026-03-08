@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { isDisposableEmail, isValidEmailFormat } from '@/lib/disposable-emails';
 import { Input } from '@/components/ui/input';
@@ -13,7 +13,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
-import { Loader2 } from 'lucide-react';
+import { useReferral } from '@/hooks/useReferral';
+import { Loader2, Gift } from 'lucide-react';
 
 interface AuthModalProps {
   open: boolean;
@@ -24,8 +25,12 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, user } = useAuth();
+  const { processReferral } = useReferral();
   const { toast } = useToast();
+
+  // Check for referral code in URL
+  const refCode = new URLSearchParams(window.location.search).get('ref');
 
   const handleSubmit = async (mode: 'signin' | 'signup') => {
     if (!email || !password) {
@@ -60,8 +65,23 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
           setLoading(false);
           return;
         }
-        const { error } = await signUp(trimmedEmail, password);
+        const { data, error } = await signUp(trimmedEmail, password);
         if (error) throw error;
+
+        // Process referral if code exists
+        if (refCode && data?.user) {
+          // Small delay to let the profile be created by the trigger
+          setTimeout(async () => {
+            const success = await processReferral(refCode);
+            if (success) {
+              toast({
+                title: '🎉 Реферальный бонус!',
+                description: 'Ваш друг получит 10 бесплатных кредитов!',
+              });
+            }
+          }, 2000);
+        }
+
         toast({
           title: 'Регистрация успешна!',
           description: 'Добро пожаловать в PoetAI! Вы получили 5 бесплатных кредитов.',
@@ -100,7 +120,14 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
           </DialogDescription>
         </DialogHeader>
 
-        <Tabs defaultValue="signin" className="w-full">
+        {refCode && (
+          <div className="flex items-center gap-2 p-3 rounded-lg bg-accent/10 border border-accent/20 text-sm">
+            <Gift className="h-4 w-4 text-accent shrink-0" />
+            <span>Вас пригласил друг! Зарегистрируйтесь — он получит бонус.</span>
+          </div>
+        )}
+
+        <Tabs defaultValue={refCode ? "signup" : "signin"} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="signin">Вход</TabsTrigger>
             <TabsTrigger value="signup">Регистрация</TabsTrigger>
