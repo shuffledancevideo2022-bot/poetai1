@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-bg.jpg";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { ReferralWidget } from "@/components/ReferralWidget";
 
 const Index = () => {
   const [authModalOpen, setAuthModalOpen] = useState(false);
