@@ -1,7 +1,9 @@
-import { Coins, LogOut, User } from 'lucide-react';
+import { useState } from 'react';
+import { Coins, LogOut, User, Gift, Copy, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { useCredits } from '@/hooks/useCredits';
+import { useReferral } from '@/hooks/useReferral';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +20,16 @@ interface CreditDisplayProps {
 export function CreditDisplay({ onBuyClick, onLoginClick }: CreditDisplayProps) {
   const { user, signOut } = useAuth();
   const { credits, loading } = useCredits();
+  const { getReferralLink, referralCount } = useReferral();
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyReferral = async () => {
+    const link = getReferralLink();
+    if (!link) return;
+    await navigator.clipboard.writeText(link);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   if (!user) {
     return (
@@ -59,6 +71,10 @@ export function CreditDisplay({ onBuyClick, onLoginClick }: CreditDisplayProps) 
           <DropdownMenuItem onClick={onBuyClick}>
             <Coins className="h-4 w-4 mr-2" />
             Купить кредиты
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={handleCopyReferral}>
+            {copied ? <Check className="h-4 w-4 mr-2 text-green-500" /> : <Gift className="h-4 w-4 mr-2" />}
+            {copied ? 'Ссылка скопирована!' : `Пригласить друга (${referralCount})`}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => signOut()}>

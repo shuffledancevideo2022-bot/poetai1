@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PoemGenerator } from "@/components/PoemGenerator";
 import { SongGenerator } from "@/components/SongGenerator";
 import { PromptBooks } from "@/components/PromptBooks";
@@ -15,10 +15,19 @@ import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-bg.jpg";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { ReferralWidget } from "@/components/ReferralWidget";
 
 const Index = () => {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
+
+  // Auto-open auth modal if referral link
+  useEffect(() => {
+    const ref = new URLSearchParams(window.location.search).get('ref');
+    if (ref) {
+      setAuthModalOpen(true);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -113,6 +122,13 @@ const Index = () => {
       <section className="py-20 bg-gradient-to-b from-background to-sky">
         <div className="container mx-auto px-4">
           <PromptBooks />
+        </div>
+      </section>
+
+      {/* Referral Section */}
+      <section className="py-16 bg-gradient-to-b from-sky to-background">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <ReferralWidget onLoginClick={() => setAuthModalOpen(true)} />
         </div>
       </section>
 
