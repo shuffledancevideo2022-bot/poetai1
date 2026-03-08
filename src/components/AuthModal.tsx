@@ -83,8 +83,8 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         }
 
         toast({
-          title: 'Регистрация успешна!',
-          description: 'Добро пожаловать в PoetAI! Вы получили 5 бесплатных кредитов.',
+          title: 'Проверьте почту!',
+          description: 'Мы отправили письмо для подтверждения на ' + trimmedEmail + '. Подтвердите email, чтобы войти.',
         });
       } else {
         const { error } = await signIn(email, password);
