@@ -1,7 +1,9 @@
-import { Coins, LogOut, User } from 'lucide-react';
+import { useState } from 'react';
+import { Coins, LogOut, User, Gift, Copy, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { useCredits } from '@/hooks/useCredits';
+import { useReferral } from '@/hooks/useReferral';
 import {
   DropdownMenu,
   DropdownMenuContent,
