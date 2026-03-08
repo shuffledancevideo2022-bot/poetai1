@@ -20,6 +20,16 @@ interface CreditDisplayProps {
 export function CreditDisplay({ onBuyClick, onLoginClick }: CreditDisplayProps) {
   const { user, signOut } = useAuth();
   const { credits, loading } = useCredits();
+  const { getReferralLink, referralCount } = useReferral();
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyReferral = async () => {
+    const link = getReferralLink();
+    if (!link) return;
+    await navigator.clipboard.writeText(link);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   if (!user) {
     return (
