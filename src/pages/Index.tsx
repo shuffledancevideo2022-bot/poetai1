@@ -1,6 +1,13 @@
+import { useState } from "react";
 import { PoemGenerator } from "@/components/PoemGenerator";
 import { SongGenerator } from "@/components/SongGenerator";
 import { PromptBooks } from "@/components/PromptBooks";
+import { SocialProof } from "@/components/SocialProof";
+import { Testimonials } from "@/components/Testimonials";
+import { PromoBanner } from "@/components/PromoBanner";
+import { UpsellBanner } from "@/components/UpsellBanner";
+import { AuthModal } from "@/components/AuthModal";
+import { PurchaseModal } from "@/components/PurchaseModal";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, Sparkles } from "lucide-react";
@@ -10,14 +17,17 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 
 const Index = () => {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [purchaseModalOpen, setPurchaseModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen">
       <Header />
+      <PromoBanner />
 
       {/* Hero Section */}
       <section 
-        className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-16"
+        className="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-24"
         style={{
           backgroundImage: `linear-gradient(to bottom, rgba(252, 250, 255, 0.9), rgba(229, 222, 255, 0.95)), url(${heroImage})`,
           backgroundSize: 'cover',
@@ -48,7 +58,7 @@ const Index = () => {
             >
               <a href="#generator">
                 <Sparkles className="mr-2 h-5 w-5" />
-                Создать стих
+                Создать стих бесплатно
               </a>
             </Button>
             <Button 
@@ -66,6 +76,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Social Proof */}
+      <SocialProof />
+
       {/* Generator Section with Tabs */}
       <section id="generator" className="py-20 bg-gradient-to-b from-sky to-background">
         <div className="container mx-auto px-4">
@@ -80,9 +93,17 @@ const Index = () => {
             </TabsList>
             <TabsContent value="poem">
               <PoemGenerator />
+              <UpsellBanner
+                onBuyClick={() => setPurchaseModalOpen(true)}
+                onLoginClick={() => setAuthModalOpen(true)}
+              />
             </TabsContent>
             <TabsContent value="song">
               <SongGenerator />
+              <UpsellBanner
+                onBuyClick={() => setPurchaseModalOpen(true)}
+                onLoginClick={() => setAuthModalOpen(true)}
+              />
             </TabsContent>
           </Tabs>
         </div>
@@ -95,7 +116,13 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <Testimonials />
+
       <Footer />
+
+      <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
+      <PurchaseModal open={purchaseModalOpen} onOpenChange={setPurchaseModalOpen} />
     </div>
   );
 };
