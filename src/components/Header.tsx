@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { BookOpen, Library, Newspaper, CreditCard, Menu, X } from "lucide-react";
+import { BookOpen, Library, Newspaper, CreditCard, Gift, Menu, X } from "lucide-react";
 import { CreditDisplay } from "@/components/CreditDisplay";
 import { AuthModal } from "@/components/AuthModal";
 import { PurchaseModal } from "@/components/PurchaseModal";
@@ -11,6 +11,7 @@ const navLinks = [
   { to: "/library", icon: Library, label: "Библиотека" },
   { to: "/blog", icon: Newspaper, label: "Блог" },
   { to: "/pricing", icon: CreditCard, label: "Тарифы" },
+  { to: "/referral", icon: Gift, label: "Рефералы" },
 ];
 
 export function Header() {
