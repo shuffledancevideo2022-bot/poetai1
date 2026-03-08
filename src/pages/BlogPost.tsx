@@ -8,6 +8,7 @@ import { ru } from "date-fns/locale";
 import { CalendarDays, ArrowLeft } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { Helmet } from "react-helmet-async";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -27,8 +28,33 @@ export default function BlogPost() {
     enabled: !!slug,
   });
 
+  const siteUrl = "https://poetai1.lovable.app";
+  const postUrl = `${siteUrl}/blog/${slug}`;
+  const plainExcerpt = post?.excerpt || post?.title || "Статья в блоге PoetAI";
+  const ogImage = post?.cover_url || `${siteUrl}/og-default.png`;
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-background via-sky to-background">
+      {post && (
+        <Helmet>
+          <title>{post.title} — PoetAI Блог</title>
+          <meta name="description" content={plainExcerpt} />
+          <link rel="canonical" href={postUrl} />
+          <meta property="og:title" content={post.title} />
+          <meta property="og:description" content={plainExcerpt} />
+          <meta property="og:type" content="article" />
+          <meta property="og:url" content={postUrl} />
+          <meta property="og:image" content={ogImage} />
+          <meta property="og:site_name" content="PoetAI" />
+          {post.published_at && (
+            <meta property="article:published_time" content={post.published_at} />
+          )}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={post.title} />
+          <meta name="twitter:description" content={plainExcerpt} />
+          <meta name="twitter:image" content={ogImage} />
+        </Helmet>
+      )}
       <Header />
       <div className="flex-1 container mx-auto px-4 py-12 max-w-3xl pt-24">
         <Link to="/blog">

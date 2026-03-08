@@ -8,6 +8,7 @@ import { ru } from "date-fns/locale";
 import { CalendarDays } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Helmet } from "react-helmet-async";
 
 export default function Blog() {
   const { data: posts = [], isLoading } = useQuery({
@@ -25,6 +26,15 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-background via-sky to-background">
+      <Helmet>
+        <title>Блог — PoetAI | Статьи о поэзии и нейросетях</title>
+        <meta name="description" content="Статьи о поэзии, музыке, искусственном интеллекте и генерации текстов. Советы, гайды и вдохновение от PoetAI." />
+        <link rel="canonical" href="https://poetai1.lovable.app/blog" />
+        <meta property="og:title" content="Блог PoetAI — Статьи о поэзии и нейросетях" />
+        <meta property="og:description" content="Статьи о поэзии, музыке и искусственном интеллекте." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://poetai1.lovable.app/blog" />
+      </Helmet>
       <Header />
       <div className="flex-1 container mx-auto px-4 py-12 max-w-4xl pt-24">
         <div className="text-center mb-12">
