@@ -360,8 +360,8 @@ export const PoemGenerator = () => {
               </Button>
             </div>
           </div>
-          <div className="prose prose-lg max-w-none">
-            <pre className="whitespace-pre-wrap font-serif text-lg leading-relaxed text-foreground">
+          <div className="max-w-none">
+            <pre className="whitespace-pre-wrap font-serif text-lg leading-relaxed text-foreground bg-background/50 p-4 rounded-lg">
               {generatedPoem}
             </pre>
           </div>
