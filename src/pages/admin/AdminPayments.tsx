@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { WebhookMonitor } from '@/components/admin/WebhookMonitor';
 import { PaymentStats } from '@/components/admin/PaymentStats';
+import { TestPaymentForm } from '@/components/admin/TestPaymentForm';
 
 interface Payment {
   id: string;
