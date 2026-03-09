@@ -90,6 +90,7 @@ export default function AdminPayments() {
           <TabsTrigger value="payments">Платежи</TabsTrigger>
           <TabsTrigger value="webhook">Webhook</TabsTrigger>
           <TabsTrigger value="stats">Статистика</TabsTrigger>
+          <TabsTrigger value="test">Тест платежей</TabsTrigger>
         </TabsList>
         
         <TabsContent value="payments">
