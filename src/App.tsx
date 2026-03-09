@@ -23,6 +23,7 @@ import AdminSubscriptions from "./pages/admin/AdminSubscriptions";
 import AdminNotifications from "./pages/admin/AdminNotifications";
 import AdminBlog from "./pages/admin/AdminBlog";
 import BlogPost from "./pages/BlogPost";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
             <Route path="/payment/success" element={<PaymentSuccess />} />
             <Route path="/payment/failed" element={<PaymentFailed />} />
             <Route path="/referral" element={<Referral />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<AdminDashboard />} />
               <Route path="users" element={<AdminUsers />} />

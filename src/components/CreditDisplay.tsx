@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Coins, LogOut, User, Gift, Copy, Check } from 'lucide-react';
+import { Coins, LogOut, User, Gift, Copy, Check, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { useCredits } from '@/hooks/useCredits';
@@ -11,6 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Link } from 'react-router-dom';
 
 interface CreditDisplayProps {
   onBuyClick: () => void;
@@ -68,6 +69,12 @@ export function CreditDisplay({ onBuyClick, onLoginClick }: CreditDisplayProps) 
             {user.email}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+          <DropdownMenuItem asChild>
+            <Link to="/profile">
+              <Settings className="h-4 w-4 mr-2" />
+              Личный кабинет
+            </Link>
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={onBuyClick}>
             <Coins className="h-4 w-4 mr-2" />
             Купить кредиты
