@@ -138,7 +138,7 @@ const Index = () => {
       <Footer />
 
       <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
-      <PurchaseModal open={purchaseModalOpen} onOpenChange={setPurchaseModalOpen} />
+      <PurchaseModal open={purchaseModalOpen} onOpenChange={setPurchaseModalOpen} onLoginClick={() => setAuthModalOpen(true)} />
     </div>
   );
 };

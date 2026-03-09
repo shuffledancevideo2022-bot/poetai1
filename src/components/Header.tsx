@@ -80,7 +80,7 @@ export function Header() {
       </header>
 
       <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
-      <PurchaseModal open={purchaseModalOpen} onOpenChange={setPurchaseModalOpen} />
+      <PurchaseModal open={purchaseModalOpen} onOpenChange={setPurchaseModalOpen} onLoginClick={() => setAuthModalOpen(true)} />
     </>
   );
 }
