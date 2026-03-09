@@ -478,6 +478,17 @@ export type Database = {
         }
         Returns: number
       }
+      create_test_payment: {
+        Args: {
+          _amount: number
+          _credits_amount: number
+          _currency?: string
+          _email: string
+          _payment_method?: string
+          _status?: string
+        }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
