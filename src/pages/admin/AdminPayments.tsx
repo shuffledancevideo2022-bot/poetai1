@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { WebhookMonitor } from '@/components/admin/WebhookMonitor';
 import { PaymentStats } from '@/components/admin/PaymentStats';
+import { TestPaymentForm } from '@/components/admin/TestPaymentForm';
 
 interface Payment {
   id: string;
@@ -89,6 +90,7 @@ export default function AdminPayments() {
           <TabsTrigger value="payments">Платежи</TabsTrigger>
           <TabsTrigger value="webhook">Webhook</TabsTrigger>
           <TabsTrigger value="stats">Статистика</TabsTrigger>
+          <TabsTrigger value="test">Тест платежей</TabsTrigger>
         </TabsList>
         
         <TabsContent value="payments">
@@ -101,6 +103,10 @@ export default function AdminPayments() {
         
         <TabsContent value="stats">
           <PaymentStats />
+        </TabsContent>
+        
+        <TabsContent value="test">
+          <TestPaymentForm />
         </TabsContent>
       </Tabs>
     </div>
