@@ -69,6 +69,12 @@ export function CreditDisplay({ onBuyClick, onLoginClick }: CreditDisplayProps) 
             {user.email}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+          <DropdownMenuItem asChild>
+            <Link to="/profile">
+              <Settings className="h-4 w-4 mr-2" />
+              Личный кабинет
+            </Link>
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={onBuyClick}>
             <Coins className="h-4 w-4 mr-2" />
             Купить кредиты
