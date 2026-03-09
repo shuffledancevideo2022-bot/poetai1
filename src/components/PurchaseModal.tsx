@@ -6,12 +6,15 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Coins, Sparkles, Crown, Zap } from 'lucide-react';
+import { Coins, Sparkles, Crown, Zap, AlertTriangle, LogIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/hooks/useAuth';
+import { Button } from '@/components/ui/button';
 
 interface PurchaseModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onLoginClick?: () => void;
 }
 
 const packages = [
@@ -54,7 +57,8 @@ const subscriptions = [
   },
 ];
 
-export function PurchaseModal({ open, onOpenChange }: PurchaseModalProps) {
+export function PurchaseModal({ open, onOpenChange, onLoginClick }: PurchaseModalProps) {
+  const { user } = useAuth();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
@@ -67,6 +71,34 @@ export function PurchaseModal({ open, onOpenChange }: PurchaseModalProps) {
             Выберите пакет кредитов или безлимитную подписку
           </DialogDescription>
         </DialogHeader>
+
+        {!user && (
+          <div className="flex items-start gap-3 p-4 rounded-xl bg-destructive/10 border border-destructive/20">
+            <AlertTriangle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-destructive">
+                Вы не авторизованы
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Войдите в аккаунт перед оплатой, чтобы кредиты автоматически зачислились на ваш баланс
+              </p>
+              {onLoginClick && (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-destructive/30 text-destructive hover:bg-destructive/10"
+                  onClick={() => {
+                    onOpenChange(false);
+                    onLoginClick();
+                  }}
+                >
+                  <LogIn className="h-4 w-4 mr-2" />
+                  Войти в аккаунт
+                </Button>
+              )}
+            </div>
+          </div>
+        )}
 
         <Tabs defaultValue="packages" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
