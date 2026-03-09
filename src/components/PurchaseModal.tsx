@@ -6,8 +6,10 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Coins, Sparkles, Crown, Zap } from 'lucide-react';
+import { Coins, Sparkles, Crown, Zap, AlertTriangle, LogIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/hooks/useAuth';
+import { Button } from '@/components/ui/button';
 
 interface PurchaseModalProps {
   open: boolean;
