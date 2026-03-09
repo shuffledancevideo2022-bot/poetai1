@@ -247,7 +247,7 @@ export function WebhookMonitor() {
                       {formatTimestamp(log.timestamp)}
                     </span>
                   </div>
-                  <div className="text-sm font-mono bg-muted p-2 rounded">
+                  <div className="text-sm font-mono bg-muted p-2 rounded text-foreground">
                     {log.event_message}
                   </div>
                 </div>
