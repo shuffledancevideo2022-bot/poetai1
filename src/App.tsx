@@ -23,6 +23,7 @@ import AdminSubscriptions from "./pages/admin/AdminSubscriptions";
 import AdminNotifications from "./pages/admin/AdminNotifications";
 import AdminBlog from "./pages/admin/AdminBlog";
 import BlogPost from "./pages/BlogPost";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
