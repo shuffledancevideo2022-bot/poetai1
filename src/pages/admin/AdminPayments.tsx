@@ -104,6 +104,10 @@ export default function AdminPayments() {
         <TabsContent value="stats">
           <PaymentStats />
         </TabsContent>
+        
+        <TabsContent value="test">
+          <TestPaymentForm />
+        </TabsContent>
       </Tabs>
     </div>
   );
