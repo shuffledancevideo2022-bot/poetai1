@@ -35,23 +35,17 @@ export function WebhookMonitor() {
     try {
       setRefreshing(true);
       
-      // Use Supabase's analytics to get edge function logs
-      const { data: analyticsData, error } = await supabase.rpc('get_function_logs', {
-        function_name: 'lava-webhook'
-      });
-
-      if (error) {
-        console.error('Failed to fetch webhook logs via RPC:', error);
-        // Fallback: fetch recent payments to show webhook activity
-        const { data: recentPayments } = await supabase
-          .from('payments')
-          .select('*')
-          .order('created_at', { ascending: false })
-          .limit(10);
-        
-        // Create mock logs from payments data
-        const mockLogs = (recentPayments || []).map(payment => ({
-          event_message: `Payment ${payment.status}: ${payment.email} - ${payment.amount} ${payment.currency}`,
+      // Get recent payments to simulate webhook monitoring
+      const { data: recentPayments } = await supabase
+        .from('payments')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(50);
+      
+      if (recentPayments) {
+        // Create logs from payments data
+        const paymentLogs = recentPayments.map(payment => ({
+          event_message: `Payment ${payment.status}: ${payment.email} - ${payment.amount} ${payment.currency} (${payment.credits_amount} кредитов)`,
           event_type: 'Payment',
           level: payment.status === 'completed' ? 'info' as const : 
                  payment.status === 'failed' ? 'error' as const : 
@@ -59,43 +53,9 @@ export function WebhookMonitor() {
           timestamp: new Date(payment.created_at).getTime() * 1000
         }));
         
-        setLogs(mockLogs);
-        return;
-      }
-
-      // Parse logs if available
-      const webhookLogs = analyticsData?.logs || [];
-      setLogs(webhookLogs);
-      
-      const totalCalls = webhookLogs.filter((log: WebhookLog) => 
-        log.event_message.includes('Webhook payload:')
-      ).length;
-      
-      const failedCalls = webhookLogs.filter((log: WebhookLog) => 
-        log.level === 'error'
-      ).length;
-      
-      const lastCall = webhookLogs.length > 0 
-        ? new Date(webhookLogs[0].timestamp / 1000).toISOString()
-        : null;
-
-      setStats({
-        total_calls: totalCalls,
-        successful_calls: totalCalls - failedCalls,
-        failed_calls: failedCalls,
-        last_call: lastCall
-      });
-    } catch (error) {
-      console.error('Error fetching webhook logs:', error);
-      
-      // Fallback to payment data for basic monitoring
-      const { data: recentPayments } = await supabase
-        .from('payments')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(20);
-      
-      if (recentPayments) {
+        setLogs(paymentLogs);
+        
+        // Calculate stats
         const completedPayments = recentPayments.filter(p => p.status === 'completed').length;
         const failedPayments = recentPayments.filter(p => p.status === 'failed').length;
         const totalPayments = recentPayments.length;
@@ -107,6 +67,8 @@ export function WebhookMonitor() {
           last_call: recentPayments[0]?.created_at || null
         });
       }
+    } catch (error) {
+      console.error('Error fetching payment data:', error);
     } finally {
       setRefreshing(false);
       setLoading(false);
