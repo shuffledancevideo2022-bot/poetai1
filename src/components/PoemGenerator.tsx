@@ -78,6 +78,11 @@ export const PoemGenerator = () => {
 
       const data = await response.json();
       setGeneratedPoem(data.poem);
+      
+      // Increment counter and dispatch event
+      incrementPoemsCount();
+      window.dispatchEvent(new CustomEvent('poem-generated'));
+      
       toast({
         title: "Стихотворение создано! ✨",
         description: "Ваше произведение готово",
