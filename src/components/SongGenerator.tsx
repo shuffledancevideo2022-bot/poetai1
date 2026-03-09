@@ -207,6 +207,11 @@ export const SongGenerator = () => {
       const data = await response.json();
       setSongStyle(data.style);
       setGeneratedSong(data.song);
+      
+      // Increment counter and dispatch event
+      incrementPoemsCount();
+      window.dispatchEvent(new CustomEvent('poem-generated'));
+      
       toast({
         title: "Песня создана! 🎵",
         description: "Готово для Suno AI",
