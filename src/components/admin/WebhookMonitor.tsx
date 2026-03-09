@@ -88,9 +88,9 @@ export function WebhookMonitor() {
       case 'error':
         return <AlertCircle className="h-4 w-4 text-destructive" />;
       case 'info':
-        return <CheckCircle className="h-4 w-4 text-green-600" />;
+        return <CheckCircle className="h-4 w-4 text-primary" />;
       case 'warn':
-        return <Clock className="h-4 w-4 text-yellow-600" />;
+        return <Clock className="h-4 w-4 text-secondary" />;
       default:
         return <CheckCircle className="h-4 w-4 text-muted-foreground" />;
     }
