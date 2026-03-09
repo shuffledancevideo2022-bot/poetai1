@@ -128,7 +128,7 @@ export function PaymentStats() {
             <CardTitle className="text-sm font-medium">Общая выручка</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-success">
+            <div className="text-2xl font-bold text-green-600">
               {totals.total_amount.toLocaleString('ru')} ₽
             </div>
           </CardContent>
