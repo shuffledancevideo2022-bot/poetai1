@@ -57,7 +57,8 @@ const subscriptions = [
   },
 ];
 
-export function PurchaseModal({ open, onOpenChange }: PurchaseModalProps) {
+export function PurchaseModal({ open, onOpenChange, onLoginClick }: PurchaseModalProps) {
+  const { user } = useAuth();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
