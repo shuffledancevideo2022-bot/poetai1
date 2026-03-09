@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 interface PurchaseModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onLoginClick?: () => void;
 }
 
 const packages = [
