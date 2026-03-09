@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useRateLimit } from "@/hooks/useRateLimit";
 import { RateLimitIndicator } from "@/components/RateLimitIndicator";
 import { Loader2, Sparkles, Copy, Share2 } from "lucide-react";
+import { incrementPoemsCount } from "@/components/SocialProof";
 
 export const PoemGenerator = () => {
   const [prompt, setPrompt] = useState("");
