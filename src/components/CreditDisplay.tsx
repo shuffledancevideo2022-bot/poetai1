@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Coins, LogOut, User, Gift, Copy, Check } from 'lucide-react';
+import { Coins, LogOut, User, Gift, Copy, Check, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { useCredits } from '@/hooks/useCredits';
