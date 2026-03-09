@@ -193,15 +193,17 @@ export function WebhookMonitor() {
         </Card>
       </div>
 
-      {/* Webhook URL Info */}
       <Alert>
         <AlertCircle className="h-4 w-4" />
         <AlertDescription>
           <div className="space-y-2">
             <p><strong>Webhook URL для настройки в Lava.top:</strong></p>
-            <code className="bg-muted px-2 py-1 rounded text-sm">
+            <code className="bg-muted px-2 py-1 rounded text-sm font-mono">
               https://obtxzstpggaihoxnsarf.supabase.co/functions/v1/lava-webhook
             </code>
+            <p className="text-sm text-muted-foreground mt-2">
+              Скопируйте этот URL и добавьте его в настройки webhook в личном кабинете Lava.top
+            </p>
           </div>
         </AlertDescription>
       </Alert>
