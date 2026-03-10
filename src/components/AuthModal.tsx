@@ -89,10 +89,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         const { data, error } = await signUp(trimmedEmail, password);
         if (error) throw error;
 
-        // Save referral code to process after email confirmation
-        if (refCode) {
-          localStorage.setItem('pending_referral', refCode);
-        }
+        // Referral code is already saved in localStorage by App.tsx
 
         toast({
           title: 'Проверьте почту!',
