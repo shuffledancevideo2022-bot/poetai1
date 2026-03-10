@@ -68,18 +68,9 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         const { data, error } = await signUp(trimmedEmail, password);
         if (error) throw error;
 
-        // Process referral if code exists
-        if (refCode && data?.user) {
-          // Small delay to let the profile be created by the trigger
-          setTimeout(async () => {
-            const success = await processReferral(refCode);
-            if (success) {
-              toast({
-                title: '🎉 Реферальный бонус!',
-                description: 'Ваш друг получит 10 бесплатных кредитов!',
-              });
-            }
-          }, 2000);
+        // Save referral code to process after email confirmation
+        if (refCode) {
+          localStorage.setItem('pending_referral', refCode);
         }
 
         toast({
