@@ -32,6 +32,27 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
   // Check for referral code in URL
   const refCode = new URLSearchParams(window.location.search).get('ref');
 
+  // Process pending referral after email confirmation (user becomes available)
+  useEffect(() => {
+    if (!user) return;
+    const pendingRef = localStorage.getItem('pending_referral');
+    if (!pendingRef) return;
+
+    // Small delay to ensure profile trigger has fired
+    const timer = setTimeout(async () => {
+      const success = await processReferral(pendingRef);
+      localStorage.removeItem('pending_referral');
+      if (success) {
+        toast({
+          title: '🎉 Реферальный бонус!',
+          description: 'Ваш друг получил 10 бесплатных кредитов!',
+        });
+      }
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [user]);
+
   const handleSubmit = async (mode: 'signin' | 'signup') => {
     if (!email || !password) {
       toast({
