@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy PoetAI to GitHub Pages
 
 on:
   push:
@@ -16,19 +16,22 @@ jobs:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
-        node-version: 20  # Для новых deps
+        node-version: 20
+        cache: 'npm'
+    - run: corepack enable  # Для новых deps
     - run: npm ci
     - run: npm run build
+      env:
+        VITE_BASE: '/poetai1/'
     - uses: actions/upload-pages-artifact@v3
       with:
-        path: dist
+        path: ./dist
+    - name: Verify dist
+      run: ls -la dist/  # Лог для дебага
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
     - id: deployment
       uses: actions/deploy-pages@v4
