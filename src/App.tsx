@@ -40,7 +40,7 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <BrowserRouter basename="/poetai1/">
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/guide" element={<Guide />} />
