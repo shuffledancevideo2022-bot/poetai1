@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react-swc'  // Ваш SWC!
 
 export default defineConfig({
   plugins: [react()],
-  base: '/poetai1/',  // Замените ВАШЕ-ИМЯ-РЕПО на точное имя этого репо! Например /my-site/
+  base: '/poetai1/'
 })
