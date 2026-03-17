@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 // import { PoemGenerator } from "@/components/PoemGenerator";
-import { SongGenerator } from "@/components/SongGenerator";
+// import { SongGenerator } from "@/components/SongGenerator";
 import { PromptBooks } from "@/components/PromptBooks";
 import { SocialProof } from "@/components/SocialProof";
 import { Testimonials } from "@/components/Testimonials";
@@ -108,7 +108,7 @@ const Index = () => {
               />
             </TabsContent>
             <TabsContent value="song">
-              <SongGenerator />
+             {/*   <SongGenerator /> */}
               <UpsellBanner
                 onBuyClick={() => setPurchaseModalOpen(true)}
                 onLoginClick={() => setAuthModalOpen(true)}
